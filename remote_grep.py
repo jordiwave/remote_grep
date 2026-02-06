@@ -20,15 +20,10 @@ options:
 Usage:
   python3 remote_grep.py \
     --config hosts.json \
-    --search 'Retorno:99' \
-    --path '/var/opt/aat/trazas/ma/sunone/web_visord/ssnnMAB0076*' \
+    --search 'Return:' \
+    --path '/var/log/*.log' \
     --download 1 \
     --dest downloads
-
-Notes:
-- Uses password-based SSH auth (per requirement). Consider SSH keys for production.
-- Uses grep -F -l to list matching files; this is more reliable for parsing results.
-- Wildcard expansion (the '*' in your path) is performed on the remote host shell.
 """
 
 import argparse
@@ -214,7 +209,7 @@ def main() -> int:
     args = parse_args()
     try:
         hosts = load_hosts(args.config)
-        print(hosts)
+
     except Exception as e:
         print(f"[FATAL] Could not load config: {e}", file=sys.stderr)
         return 2
